@@ -22,5 +22,10 @@ class Hyperparameters():
     
     # tacotron
     dropout_p = 0.5
+    vocab = "PE abcdefghijklmnopqrstuvwxyz'.?"
+    K = 16
+    num_highways = 4
+    r = 5
+    max_Ty = max_iter = 200
     
     

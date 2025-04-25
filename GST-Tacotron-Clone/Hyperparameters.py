@@ -15,8 +15,9 @@ class Hyperparameters():
     # reference encoder
     E = 256
     ref_enc_filters = [32, 32, 64, 64, 128, 128]
-    # ref_enc_size = [3, 3]
-    # ref_enc_strides = [2, 2]
-    # ref_enc_pad = [1, 1]
+    
+    # style token layer
+    token_num = 10
+    num_heads = 8
     
     

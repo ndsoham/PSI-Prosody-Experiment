@@ -20,4 +20,7 @@ class Hyperparameters():
     token_num = 10
     num_heads = 8
     
+    # tacotron
+    dropout_p = 0.5
+    
     

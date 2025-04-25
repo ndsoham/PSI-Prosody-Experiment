@@ -1,0 +1,22 @@
+
+class Hyperparameters():
+    # preprocessing
+    sr = 16000 
+    preemphasis = .97
+    n_fft = 1024
+    n_mels = 80
+    frame_shift = 0.0125 # seconds
+    frame_length = 0.05 # seconds
+    hop_length = int(sr * frame_shift)
+    win_length = int(sr * frame_length)
+    ref_db = 20
+    max_db = 100
+    
+    # reference encoder
+    E = 256
+    ref_enc_filters = [32, 32, 64, 64, 128, 128]
+    # ref_enc_size = [3, 3]
+    # ref_enc_strides = [2, 2]
+    # ref_enc_pad = [1, 1]
+    
+    

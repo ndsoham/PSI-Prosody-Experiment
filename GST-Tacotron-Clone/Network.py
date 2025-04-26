@@ -132,5 +132,72 @@ class Decoder(nn.Module):
                 attn_apply = torch.bmm(attn_weight, memory)
                 attn_project = self.attn_projection(torch.cat([attn_apply, outputs], dim=-1))
                 
+                # GRU1
+                self.gru1.flatten_parameters()
+                outputs1, gru1_hidden = self.gru1(attn_project, gru1_hidden)
+                outputs1 = outputs1 + attn_project
+                # GRU2
+                self.gru2.flatten_parameters()
+                outputs2, gru2_hidden = self.gru2(outputs1, gru2_hidden)
+                outputs2 = outputs2 + outputs1
                 
+                # generate log melspectrogram
+                mel = self.fc1(outputs2)
+                inputs = mel[:, :, -hp.n_mels:]
+                mels.append(mel)
+                
+            mels = torch.cat(mels, dim=1)
+            attn_weights = torch.cat(attn_weights, dim=1)
+            
+            out, cbhg_hidden = self.cbhg(mels)
+            mags = self.fc2(out)
+            
+            return mels, mags, attn_weights
+        
+class DecoderCBHG(nn.Module):
+    '''
+    TODO: update docstring
+    '''
+    
+    def __init__(self):
+        super().__init__()
+        
+        self.conv1d_bank = Conv1dBank(K=hp.decoder_K, in_channels=hp.n_mels, out_channels=hp.E // 2)
+        
+        self.conv1d_1 = Conv1d(in_channels=hp.decoder_K * hp.E // 2, out_channels=hp.E, kernel_size=3)
+        self.bn1 = BatchNorm1d(hp.E)
+        self.conv1d_2 = Conv1d(in_channels=hp.E, out_channels=hp.n_mels, kernel_size=3)
+        self.bn2 = BatchNorm1d(hp.n_mels)
+        
+        self.highways = nn.ModuleList()
+        for i in range(hp.num_highways):
+            self.highways.append(Highway(in_features=hp.n_mels, out_features=hp.n_mels))
+        
+        self.gru = nn.GRU(input_size=hp.n_mels, hidden_size=hp.E // 2, num_layers=2, bidirectional=True, batch_first=True)
+    
+    def forward(self, inputs, prev_hidden=None):
+        inputs = inputs.view(inputs.size(0), -1, hp.n_mels)
+        
+        # conv1d bank
+        outputs = self.conv1d_bank(inputs)
+        outputs = max_pool1d(outputs, kernel_size=2)
+        
+        # conv1d projections
+        outputs = self.conv1d_1(outputs)
+        outputs = self.bn1(outputs)
+        outputs = nn.functional.relu(outputs)
+        outputs = self.conv1d_2(outputs)
+        outputs = self.bn2(outputs)
+        
+        outputs = outputs + inputs
+        
+        # highway net
+        for layer in self.highways:
+            outputs = layer(outputs)
+        
+        # bidirection gru
+        self.gru.flatten_parameters()
+        outputs, hidden = self.gru(outputs, prev_hidden)
+        
+        return outputs, hidden
         

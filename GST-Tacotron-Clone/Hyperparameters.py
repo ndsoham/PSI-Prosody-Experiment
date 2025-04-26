@@ -27,5 +27,7 @@ class Hyperparameters():
     num_highways = 4
     r = 5
     max_Ty = max_iter = 200
+    decoder_K = 8
+    
     
     

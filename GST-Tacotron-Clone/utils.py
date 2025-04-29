@@ -1,5 +1,4 @@
 import librosa
-import matplotlib.pyplot as plt
 import numpy as np
 from Hyperparameters import Hyperparameters as hp
 

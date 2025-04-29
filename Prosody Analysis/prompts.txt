@@ -1,0 +1,34 @@
+
+
+
+1. Marijuana Legalization
+
+prompt: 
+
+Write a persuasive argument in favor of marijuana legalization. Use 500 characters or less.
+
+response:
+
+Legalizing marijuana boosts tax revenue, reduces criminal justice costs, and creates jobs. It allows regulation for safety, removes the black market, and lets law enforcement focus on serious crimes. Medical benefits and personal freedom further support legalization—it's a smart, just, and economically sound policy.
+
+2. Corporate Bailouts
+
+prompt: 
+
+Write a persuasive argument in favor of corporate bailouts due to the economic crisis of 2008. Use 500 characters or less.
+
+response:
+
+Corporate bailouts during the 2008 economic crisis were essential to prevent total financial collapse. Key industries, especially banking and automotive, were on the brink, threatening millions of jobs and global economic stability. Bailouts stabilized markets, restored confidence, and set the stage for recovery—protecting not just corporations, but the livelihoods of everyday citizens.
+
+
+
+3. Congressional Term Limits
+
+prompt:
+
+Write a persuasive argument in favor of congressional term limits. Use 500 characters or less.
+
+response:
+
+Congressional term limits prevent career politicians from accumulating too much power, reduce corruption, and encourage fresh ideas. They promote accountability and ensure legislators stay connected to the people, not special interests. Term limits help restore trust in government by making it more responsive and less entrenched.
